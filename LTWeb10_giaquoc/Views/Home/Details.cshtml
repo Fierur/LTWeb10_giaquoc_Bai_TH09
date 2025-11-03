@@ -1,0 +1,79 @@
+﻿@model LTWeb10_giaquoc.Models.sach
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-center">THÔNG TIN CHI TIẾT SÁCH</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-3">
+        <img src="@Url.Content("~/Hinh/"+Model.anhbia)" class="img-thumbnail" alt="@Model.tensach" style="width:200px; height:auto;" />
+    </div>
+
+    <div class="col-md-5">
+        <table class="table table-bordered">
+            <tr>
+                <th>Tên sách</th>
+                <td>@Model.tensach</td>
+            </tr>
+            <tr>
+                <th>Giá bán</th>
+                <td>@String.Format("{0:N0} VNĐ", Model.giaban)</td>
+            </tr>
+            <tr>
+                <th>Mô tả</th>
+                <td>@Model.mota</td>
+            </tr>
+            <tr>
+                <th>Các tác giả tham gia:</th>
+                <td>
+                    @foreach (var tg in Model.thamgias)
+                    {
+                        <span>@tg.tacgia.tentg - @tg.vaitro</span><br>
+                    }
+                </td>
+            </tr>
+        </table>
+
+        <p>
+            @Html.ActionLink("Quay lại danh sách", "Index", null, new { @class = "btn btn-secondary" })
+        </p>
+    </div>
+    <h3 class="text-primary">Sản phẩm cùng chủ đề</h3>
+
+    <div class="row">
+        @foreach (var s in ViewBag.SachCungChuDe as List<LTWeb10_giaquoc.Models.sach>)
+        {
+            <div class="col-md-3 text-center" style="text-decoration: none; margin-bottom:20px;">
+                <a href="@Url.Action("Details", "Home", new { id = s.masach })">
+                    <img src="~/Hinh/@s.anhbia" style="width:100px;height:140px;" />
+                    <br />
+                </a>
+                @Html.ActionLink(s.tensach, "Details", "Home", new { id = s.masach }, new { @class = "text-decoration-none" })<br />
+                @Html.ActionLink("Chi tiết", "Details", "Home", new { id = s.masach }, new { @class = "btn btn-success" })
+                <p class="">@String.Format("{0:N0} VNĐ", s.giaban)</p>
+            </div>
+        }
+    </div>
+
+    <hr />
+    <h3 class="text-primary">Sản phẩm cùng nhà xuất bản</h3>
+
+    <div class="row">
+        @foreach (var s in ViewBag.SachCungNXB as List<LTWeb10_giaquoc.Models.sach>)
+        {
+            <div class="col-md-3 text-center" style="text-decoration: none; margin-bottom:20px;">
+                <a href="@Url.Action("Details", "Home", new { id = s.masach })">
+                    <img src="~/Hinh/@s.anhbia" style="width:100px;height:140px;" />
+                    <br />
+                </a>
+                @Html.ActionLink(s.tensach, "Details", "Home", new { id = s.masach }, new { @class = "text-decoration-none" })<br />
+                @Html.ActionLink("Chi tiết", "Details", "Home", new { id = s.masach }, new { @class = "btn btn-success" })
+                <p>@String.Format("{0:N0} VNĐ", s.giaban)</p>
+            </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,11 @@
+﻿@model List<LTWeb10_giaquoc.Models.chude>
+
+<ul class="nav flex-column">
+    @foreach (var cd in Model)
+    {
+        <li class="nav-item border">
+            @Html.ActionLink(cd.tencd, "HTDanhSachTheoChuDe", "Home", new { id = cd.macd }, new { @class = "nav-link" })
+        </li>
+    }
+
+</ul>

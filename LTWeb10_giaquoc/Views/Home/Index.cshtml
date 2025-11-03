@@ -1,0 +1,35 @@
+﻿@model List<LTWeb10_giaquoc.Models.sach>
+@helper Truncate(string input, int lenght)
+    {
+        if(input.Length < lenght)
+    {
+        @input
+    }
+    else
+    {
+        @input.Substring(0,lenght)<span>...</span>
+    }
+    }
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="fw-bold">Danh sách sản phẩm</h2>
+<div class="product-group">
+    <div class="row">
+        @foreach (LTWeb10_giaquoc.Models.sach s in Model)
+        {
+            <div class="col-lg-3 card mr-2 mt-2 text-center">
+                <div class="card-product">
+                    <img style="width: 300px; height: 350px; " class="card-img-top mt-2" src="@Url.Content("~/Hinh/" + s.anhbia)"  />
+                    <div class="card-body">
+                        <h5 style="font-size:30px" class="card-title">@Truncate(s.tensach, 30)</h5>
+                        @Html.ActionLink("Chi tiết", "Details", "Home", new { id = s.masach }, new { @class = "btn btn-warning" })
+                        @Html.ActionLink("Chọn", "Details", "Home", new { id = s.masach }, new { @class = "btn btn-warning" })
+                    </div>
+                </div>
+            </div>
+        }
+        </div>
+</div>

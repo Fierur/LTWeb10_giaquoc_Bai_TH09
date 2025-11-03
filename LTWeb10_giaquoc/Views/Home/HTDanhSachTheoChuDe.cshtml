@@ -1,0 +1,27 @@
+﻿@model IEnumerable<LTWeb10_giaquoc.Models.sach>
+
+@{
+    ViewBag.Title = "Danh sách sách theo chủ đề";
+}
+
+<h2 class="text-center text-primary mt-3">
+    Sách thuộc chủ đề: @ViewBag.TenChuDe
+</h2>
+
+<div class="row">
+    @foreach (var s in Model)
+    {
+        <div class="col-lg-3 card mr-2 mt-2 text-center">
+            <div class="card-product">
+                <img src="@Url.Content("~/Hinh/" + s.anhbia)"
+                     class="card-img-top mt-2"
+                     style="width:250px; height:320px;" />
+                <div class="card-body">
+                    <h5>@s.tensach</h5>
+                    <p><b>@String.Format("{0:N0}", s.giaban) VNĐ</b></p>
+                    @Html.ActionLink("Chi tiết", "Details", "Home", new { id = s.masach }, new { @class = "btn btn-warning" })
+                </div>
+            </div>
+        </div>
+    }
+</div>

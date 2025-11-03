@@ -1,0 +1,10 @@
+﻿@model IEnumerable<LTWeb10_giaquoc.Models.nhaxuatban>
+
+<ul class="list-group">
+    @foreach (var nxb in Model)
+    {
+        <li class="list-group-item">
+            @Html.ActionLink(nxb.tennxb, "HTDanhSachTheoNXB", "Home", new { id = nxb.manxb }, null)
+        </li>
+    }
+</ul>

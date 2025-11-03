@@ -1,0 +1,98 @@
+﻿@model IEnumerable<LTWeb10_giaquoc.Models.sach>
+@using LTWeb10_giaquoc.Models
+@{
+    ViewBag.Title = "TimKiemNangCao";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var chudes = ViewBag.DanhSachChuDe as List<chude> ?? new List<chude>();
+}
+
+<h2 class="text-center text-primary mb-4">Tìm Kiếm Nâng Cao</h2>
+
+<div class="card mb-4">
+    <div class="card-body">
+        @using (Html.BeginForm("TimKiemNangCao", "Home", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">Tên sách:</label>
+                <input type="text" name="tensp" class="form-control" placeholder="Nhập từ khóa tìm kiếm..." />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">Chủ đề:</label>
+                <select name="macd" class="form-select">
+                    <option value="">-- Tất cả chủ đề --</option>
+                    @foreach (var cd in chudes)
+                    {
+                        <option value="@cd.macd">@cd.tencd</option>
+                    }
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-bold">Khoảng giá:</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="khoanggia" value="0-10000" id="gia1">
+                    <label class="form-check-label" for="gia1">
+                        0 - 10,000 VNĐ
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="khoanggia" value="11000-20000" id="gia2">
+                    <label class="form-check-label" for="gia2">
+                        11,000 - 20,000 VNĐ
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="khoanggia" value="21000-40000" id="gia3">
+                    <label class="form-check-label" for="gia3">
+                        21,000 - 40,000 VNĐ
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="khoanggia" value="40000+" id="gia4">
+                    <label class="form-check-label" for="gia4">
+                        Lớn hơn 40,000 VNĐ
+                    </label>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <button class="btn btn-success btn-lg" type="submit">
+                    <i class="bi bi-search"></i> Tìm kiếm
+                </button>
+            </div>
+        }
+    </div>
+</div>
+
+@if (Model != null && Model.Any())
+{
+    <h3 class="text-primary mb-3">Kết quả tìm kiếm: @Model.Count() sản phẩm</h3>
+    <div class="row">
+        @foreach (var s in Model)
+        {
+            <div class="col-lg-3 col-md-4 col-sm-6 mb-3">
+                <div class="card h-100 text-center">
+                    <img src="@Url.Content("~/Hinh/" + s.anhbia)"
+                         class="card-img-top mx-auto mt-3"
+                         style="width:180px; height:240px; object-fit:cover;"
+                         alt="@s.tensach" />
+                    <div class="card-body">
+                        <h5 class="card-title">@s.tensach</h5>
+                        <p class="text-danger fw-bold">@String.Format("{0:N0}", s.giaban) VNĐ</p>
+                        @Html.ActionLink("Chi tiết", "Details", "Home", new { id = s.masach }, new { @class = "btn btn-warning" })
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else if (Model != null)
+{
+    <div class="alert alert-info text-center" role="alert">
+        <h4>Không tìm thấy sản phẩm nào phù hợp với tiêu chí tìm kiếm!</h4>
+        <p>Vui lòng thử lại với từ khóa hoặc tiêu chí khác.</p>
+    </div>
+}

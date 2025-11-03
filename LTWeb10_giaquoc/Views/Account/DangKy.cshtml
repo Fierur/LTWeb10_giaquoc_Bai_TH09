@@ -1,0 +1,78 @@
+﻿@{
+    ViewBag.Title = "Đăng Ký";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row justify-content-center mt-4 mb-5">
+    <div class="col-md-8 col-lg-6">
+        <div class="card shadow">
+            <div class="card-header bg-success text-white text-center">
+                <h3 class="mb-0">Đăng Ký Tài Khoản</h3>
+            </div>
+            <div class="card-body p-4">
+                @if (!string.IsNullOrEmpty(ViewBag.ThongBao as string))
+                {
+                    <div class="alert alert-danger" role="alert">
+                        @ViewBag.ThongBao
+                    </div>
+                }
+
+                @using (Html.BeginForm("DangKy", "Account", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Họ và tên: <span class="text-danger">*</span></label>
+                        <input type="text" name="tenkh" class="form-control" placeholder="Nhập họ tên đầy đủ" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Tên đăng nhập: <span class="text-danger">*</span></label>
+                        <input type="text" name="tendn" class="form-control" placeholder="Nhập tên đăng nhập" required />
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">Mật khẩu: <span class="text-danger">*</span></label>
+                            <input type="password" name="mk" class="form-control" placeholder="Nhập mật khẩu" required />
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-bold">Nhập lại mật khẩu: <span class="text-danger">*</span></label>
+                            <input type="password" name="retypemk" class="form-control" placeholder="Nhập lại mật khẩu" required />
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Email: <span class="text-danger">*</span></label>
+                        <input type="email" name="email" class="form-control" placeholder="example@email.com" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Số điện thoại: <span class="text-danger">*</span></label>
+                        <input type="tel" name="dt" class="form-control" placeholder="Nhập số điện thoại" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Địa chỉ:</label>
+                        <input type="text" name="dc" class="form-control" placeholder="Nhập địa chỉ (không bắt buộc)" />
+                        <small class="text-muted">Trường này không bắt buộc</small>
+                    </div>
+
+                    <div class="d-grid gap-2 mb-3">
+                        <button type="submit" class="btn btn-success btn-lg">
+                            Đăng ký
+                        </button>
+                    </div>
+
+                    <div class="text-center">
+                        <p class="mb-0">
+                            Đã có tài khoản?
+                            @Html.ActionLink("Đăng nhập ngay", "DangNhap", "Account", null, new { @class = "text-decoration-none fw-bold" })
+                        </p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
